@@ -11,7 +11,7 @@ Build/install locally before publishing, or let pip pull directly from GitHub la
 pip install .
 
 # From GitHub once the repository is public and tagged
-pip install git+https://github.com/<your-user>/zddoc.git@v0.1.0
+pip install git+https://github.com/HuiXillya/zddoc.git@v0.1.0
 ```
 
 ## Usage
@@ -54,3 +54,4 @@ The tests include a fixture document in `test_doc/hnw14-vdw79.doc`.
 ## Packaging notes
 
 `pyproject.toml` selects setuptools/wheel as the build backend, and `setup.cfg` provides metadata plus a console script entry point (`zddoc`). When you push to GitHub, add a tag (`v0.1.0`) so pip can install a specific release.
+
