@@ -33,6 +33,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/generate_architecture.py
 
+      - name: Generate Mermaid Diagram
+        id: mermaid
+        uses: imjohnbo/action-to-mermaid@v0
+
+      - name: Output Mermaid Diagram
+        env:
+          MERMAID: ${{ steps.mermaid.outputs.mermaid }}
+        run: |
+          echo "$MERMAID"
+
+      - name: Save Mermaid Diagram to File
+        run: |
+          echo "$MERMAID" > docs/architecture.mmd
+
       - name: 將 Mermaid 轉為 SVG 圖片
         uses: buehler/mermaid-rasterizer@v2
         with:
