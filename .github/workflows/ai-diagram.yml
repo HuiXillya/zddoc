@@ -15,6 +15,7 @@ permissions:
 jobs:
   ai-arch-gen:
     runs-on: ubuntu-latest
+    environment: MODEL_TOKEN # TODO: Uncomment and set to your environment name if using Environment Secrets
     steps:
       - name: Check MODEL_TOKEN presence
         env:
