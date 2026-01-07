@@ -60,20 +60,6 @@ jobs:
           MODEL_TOKEN: ${{ secrets.MODEL_TOKEN }} # 從 Secret 讀取並轉為環境變數
         run: python .github/scripts/generate_architecture.py
 
-      - name: Generate Mermaid Diagram
-        id: mermaid
-        uses: imjohnbo/action-to-mermaid@v1.1.0
-
-      - name: Output Mermaid Diagram
-        env:
-          MERMAID: ${{ steps.mermaid.outputs.mermaid }}
-        run: |
-          echo "$MERMAID"
-
-      - name: Save Mermaid Diagram to File
-        run: |
-          echo "$MERMAID" > docs/architecture.mmd
-
       - name: Setup mermaid-cli
         uses: AnimMouse/setup-mermaid-cli@v1
         with:
