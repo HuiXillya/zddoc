@@ -1,0 +1,48 @@
+name: AI 自動分析架構並繪圖
+
+on:
+  workflow_dispatch: # 手動觸發
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**' # 當原始碼變動時執行
+
+permissions:
+  contents: write
+  # 2026 年新功能：允許 Action 直接使用 Copilot 權限
+  id-token: write 
+
+jobs:
+  ai-arch-gen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: AI 分析代碼生成 Mermaid 檔
+        env:
+          # 直接使用內建的 GITHUB_TOKEN (需確認 Repo 設定已開啟 Copilot 存取權)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/generate_architecture.py
+
+      - name: 將 Mermaid 轉為 SVG 圖片
+        uses: open-turo/action-mermaid-cli@v2.0.0
+        with:
+          input_file: 'docs/architecture.mmd'
+          output_file: 'docs/architecture.svg'
+
+      - name: 提交並推送更新
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/architecture.mmd docs/architecture.svg
+          git commit -m "docs: AI 自動更新架構圖 [skip ci]" || echo "No changes"
+          git push
