@@ -1,3 +1,4 @@
 note
 .venv
+*.secret
 __pycache__
