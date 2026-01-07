@@ -35,7 +35,7 @@ jobs:
 
       - name: Generate Mermaid Diagram
         id: mermaid
-        uses: imjohnbo/action-to-mermaid@v0
+        uses: imjohnbo/action-to-mermaid@v1.1.0
 
       - name: Output Mermaid Diagram
         env:
@@ -47,8 +47,8 @@ jobs:
         run: |
           echo "$MERMAID" > docs/architecture.mmd
 
-      - name: 將 Mermaid 轉為 SVG 圖片
-        uses: buehler/mermaid-rasterizer@v2
+      - name: Convert Mermaid to SVG
+        uses: open-turo/action-mermaid-cli@v2.0.0
         with:
           input_file: 'docs/architecture.mmd'
           output_file: 'docs/architecture.svg'
