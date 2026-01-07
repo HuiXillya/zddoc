@@ -31,7 +31,7 @@ jobs:
         env:
           # 直接使用內建的 GITHUB_TOKEN (需確認 Repo 設定已開啟 Copilot 存取權)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MODELS_TOKEN: ${{ secrets.MODELS_TOKEN }} # 從 Secret 讀取並轉為環境變數
+          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }} # 從 Secret 讀取並轉為環境變數
         run: python .github/scripts/generate_architecture.py
 
       - name: Generate Mermaid Diagram
