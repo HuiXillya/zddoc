@@ -16,6 +16,16 @@ jobs:
   ai-arch-gen:
     runs-on: ubuntu-latest
     steps:
+      - name: Check MODELS_TOKEN presence
+        env:
+          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }}
+        run: |
+          if [ -z "$MODELS_TOKEN" ]; then
+            echo "MODELS_TOKEN missing"
+            exit 1
+          else
+            echo "MODELS_TOKEN is set"
+          fi
       - name: Checkout Code
         uses: actions/checkout@v4
 
