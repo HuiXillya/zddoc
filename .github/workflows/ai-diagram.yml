@@ -34,7 +34,7 @@ jobs:
         run: python .github/scripts/generate_architecture.py
 
       - name: 將 Mermaid 轉為 SVG 圖片
-        uses: open-turo/action-mermaid-cli@v2.0.0
+        uses: buehler/mermaid-rasterizer@v2
         with:
           input_file: 'docs/architecture.mmd'
           output_file: 'docs/architecture.svg'
