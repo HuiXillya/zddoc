@@ -26,6 +26,21 @@ jobs:
           else
             echo "MODELS_TOKEN is set"
           fi
+      - name: Validate MODELS_TOKEN
+        env:
+          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }}
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://models.github.ai/inference/chat/completions" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $MODELS_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -H "Content-Type: application/json" \
+            -d '{"model":"openai/gpt-4.1","messages":[{"role":"user","content":"ping"}]}')
+          echo "Models API returned HTTP $status"
+          if [ "$status" -ne 200 ]; then
+            echo "Token validation failed"
+            exit 1
+          fi
       - name: Checkout Code
         uses: actions/checkout@v4
 
