@@ -12,9 +12,9 @@ def generate_mermaid():
     context = "\n".join(files_tree[:50]) # 限制長度以避免 Token 超限
 
     # Call GitHub Models inference API
-    token = os.getenv("MODELS_TOKEN") or os.getenv("GITHUB_TOKEN")
+    token = os.getenv("MODEL_TOKEN") or os.getenv("GITHUB_TOKEN")
     if not token:
-        raise EnvironmentError("Environment variable MODELS_TOKEN (or GITHUB_TOKEN) is required with 'models: read' scope.")
+        raise EnvironmentError("Environment variable MODEL_TOKEN (or GITHUB_TOKEN) is required with 'models: read' scope.")
 
     org = os.getenv("MODELS_ORG")  # optional: set to attribute requests to an organization
     model = os.getenv("MODELS_MODEL") or "openai/gpt-4.1"

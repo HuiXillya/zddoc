@@ -16,23 +16,23 @@ jobs:
   ai-arch-gen:
     runs-on: ubuntu-latest
     steps:
-      - name: Check MODELS_TOKEN presence
+      - name: Check MODEL_TOKEN presence
         env:
-          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }}
+          MODEL_TOKEN: ${{ secrets.MODEL_TOKEN }}
         run: |
-          if [ -z "$MODELS_TOKEN" ]; then
-            echo "MODELS_TOKEN missing"
+          if [ -z "$MODEL_TOKEN" ]; then
+            echo "MODEL_TOKEN missing"
             exit 1
           else
-            echo "MODELS_TOKEN is set"
+            echo "MODEL_TOKEN is set"
           fi
-      - name: Validate MODELS_TOKEN
+      - name: Validate MODEL_TOKEN
         env:
-          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }}
+          MODEL_TOKEN: ${{ secrets.MODEL_TOKEN }}
         run: |
           status=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://models.github.ai/inference/chat/completions" \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $MODELS_TOKEN" \
+            -H "Authorization: Bearer $MODEL_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "Content-Type: application/json" \
             -d '{"model":"openai/gpt-4.1","messages":[{"role":"user","content":"ping"}]}')
@@ -56,7 +56,7 @@ jobs:
         env:
           # 直接使用內建的 GITHUB_TOKEN (需確認 Repo 設定已開啟 Copilot 存取權)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MODELS_TOKEN: ${{ secrets.MODEL_TOKEN }} # 從 Secret 讀取並轉為環境變數
+          MODEL_TOKEN: ${{ secrets.MODEL_TOKEN }} # 從 Secret 讀取並轉為環境變數
         run: python .github/scripts/generate_architecture.py
 
       - name: Generate Mermaid Diagram
